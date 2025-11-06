@@ -1,10 +1,17 @@
-const http = require('http');
-const app = require('./app');
+const path = require("path");
+const express = require("express");
+const app = express();
 
-const port = process.env.PORT || 3000;
-app.set('port', port);
+// Serve all files inside the "public" folder
+app.use(express.static(path.join(__dirname, "public")));
 
-const server = http.createServer(app);
-server.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+// Default route for homepage
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Travlr server running at http://localhost:${PORT}`);
 });
