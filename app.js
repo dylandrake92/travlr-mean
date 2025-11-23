@@ -15,23 +15,40 @@ const apiRoutes = require('./app_api/routes/index');
 
 const app = express();
 
-// ----- VIEW ENGINE SETUP (HBS) -----
+/* -------------------------------------------
+   CORS FIX — REQUIRED FOR ANGULAR (4200 → 3000)
+-------------------------------------------- */
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); 
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+/* -------------------------------------------
+   VIEW ENGINE SETUP (HBS)
+-------------------------------------------- */
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'hbs');
-
 hbs.registerPartials(path.join(__dirname, 'app_server', 'views', 'partials'));
 
-// ----- MIDDLEWARE -----
+/* -------------------------------------------
+   MIDDLEWARE
+-------------------------------------------- */
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ----- API ROUTES (must be FIRST) -----
+/* -------------------------------------------
+   ROUTES — API FIRST
+-------------------------------------------- */
 app.use('/api', apiRoutes);
 
-// ----- SERVER-SIDE ROUTES (HBS) -----
+/* -------------------------------------------
+   ROUTES — SERVER-SIDE HBS
+-------------------------------------------- */
 app.use('/', indexRouter);
 app.use('/travel', travelRouter);
 
