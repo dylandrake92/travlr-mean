@@ -1,4 +1,4 @@
-require('./app_server/models/db');
+require('./app_api/models/db');
 
 const express = require('express');
 const path = require('path');
@@ -28,11 +28,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ----- SERVER-SIDE ROUTES -----
+// ----- API ROUTES (must be FIRST) -----
+app.use('/api', apiRoutes);
+
+// ----- SERVER-SIDE ROUTES (HBS) -----
 app.use('/', indexRouter);
 app.use('/travel', travelRouter);
-
-// ----- API ROUTES -----
-app.use('/api', apiRoutes);   // <---- THIS FIXES /api/trips
 
 module.exports = app;
