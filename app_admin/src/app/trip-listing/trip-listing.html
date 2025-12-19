@@ -1,14 +1,18 @@
-<h2>Trips</h2>
-
-<div *ngIf="loading">Loading trips...</div>
-
-<div *ngIf="!loading && trips.length > 0">
-  <app-trip-card
-    *ngFor="let trip of trips"
-    [trip]="trip">
-  </app-trip-card>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="m-0">Trips</h2>
+  <a *ngIf="auth.isLoggedIn()" routerLink="/add" class="btn btn-primary">Add Trip</a>
 </div>
 
-<div *ngIf="!loading && trips.length === 0">
-  <p>No trips available.</p>
+<p *ngIf="loading">Loading trips...</p>
+<p *ngIf="!loading && message">{{ message }}</p>
+
+<div class="row">
+  <div class="col-12 col-md-4" *ngFor="let t of trips">
+    <app-trip-card [trip]="t">
+      <div class="mt-2" *ngIf="auth.isLoggedIn()">
+        <a [routerLink]="['/edit', t.code]" class="btn btn-sm btn-outline-secondary">Edit</a>
+        <button class="btn btn-sm btn-outline-danger ms-2" (click)="onDelete(t.code)">Delete</button>
+      </div>
+    </app-trip-card>
+  </div>
 </div>

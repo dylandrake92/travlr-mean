@@ -1,3 +1,8 @@
-<h1>Trips</h1>
-
-<app-trip-listing></app-trip-listing>
+<!-- FILE: app_admin/src/app/app.html -->
+<nav class="navbar navbar-default" style="padding:8px">
+  <a class="navbar-brand" routerLink="">Travlr Admin</a>
+  <a routerLink="/add" class="btn btn-sm btn-primary">Add Trip</a>
+</nav>
+<div class="container" style="padding:12px">
+  <router-outlet></router-outlet>
+</div>

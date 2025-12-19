@@ -1,0 +1,14 @@
+<!-- FILE: app_admin/src/app/login/login.html -->
+<h2>Admin Login</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate style="max-width:400px">
+  <div class="mb-2">
+    <label>Email</label>
+    <input class="form-control" formControlName="email" type="email" />
+  </div>
+  <div class="mb-2">
+    <label>Password</label>
+    <input class="form-control" formControlName="password" type="password" />
+  </div>
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Login</button>
+  <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
+</form>

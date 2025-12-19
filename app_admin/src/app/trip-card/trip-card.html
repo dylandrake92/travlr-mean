@@ -1,9 +1,22 @@
-<div class="trip-card">
-  <h3>{{ trip.name }}</h3>
-  <p><strong>Code:</strong> {{ trip.code }}</p>
-  <p><strong>Length:</strong> {{ trip.length }}</p>
-  <p><strong>Start:</strong> {{ trip.start }}</p>
-  <p><strong>Resort:</strong> {{ trip.resort }}</p>
-  <p><strong>Price:</strong> {{ trip.perPerson | currency:'USD' }}</p>
-  <p><strong>Description:</strong> {{ trip.description }}</p>
+<!-- FILE: app_admin/src/app/trip-card/trip-card.html -->
+<div class="card" style="margin-bottom:12px">
+  <div class="card-header">{{ trip.name }}</div>
+
+  <!-- Use a template ref (#img) and set a fallback on error -->
+  <img
+    #img
+    [src]="trip.image.startsWith('http') ? trip.image : '/images/' + trip.image"
+    (error)="img.src='https://via.placeholder.com/640x360?text=Trip'"
+    alt="trip image"
+    class="card-img-top"
+  />
+
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">{{ trip.resort }}</h6>
+    <p class="card-subtitle mt-3 mb-3 text-muted">
+      {{ trip.length }} • {{ trip.perPerson | currency:'USD':'symbol' }} per person
+    </p>
+    <p class="card-text" [innerHTML]="trip.description"></p>
+    <ng-content></ng-content>
+  </div>
 </div>
